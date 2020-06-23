@@ -252,7 +252,7 @@ public class ApiService {
             }
             log.error("errorrr== [{}]", e.getMessage());
             genericResponse = (CheckFactoryResponse) clientAbsent(genericResponse, tracking, "getBill",
-                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC,
+                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC+e.getMessage(),
                     request.getRequestURI(), tab[1]);
             // return genericResponse;
 
@@ -278,6 +278,19 @@ public class ApiService {
         OutputStream os = null;
         try {
 
+            CheckFactoryRequest checkFactoryRequest = new CheckFactoryRequest();
+            checkFactoryRequest.setBillerCode(cardsRequest.getBillerCode());
+            checkFactoryRequest.setLangue(cardsRequest.getLangue());
+            checkFactoryRequest.setRefenca(cardsRequest.getCashingRef());
+            checkFactoryRequest.setVnumFact(cardsRequest.getVnumFact());
+            CheckFactoryResponse checkFactoryResponse = checkFactory(checkFactoryRequest, request);
+            if(checkFactoryResponse==null || checkFactoryResponse.getBillAmount()==null){
+                genericResponse = (RecuPaiementResponse) clientAbsent(genericResponse, tracking, "getBill in recu facture",
+                        ICodeDescResponse.ECHEC_CODE, ICodeDescResponse.FACTURE_NON_TROUVE, request.getRequestURI(),
+                        tab[1]);
+                        return genericResponse;
+            }
+
             URL url = new URL(filiale.getEndPoint());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
@@ -289,15 +302,15 @@ public class ApiService {
             builder.append("<send_request><request>");
             builder.append(
                     "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:WebservicePlus\">");
-            builder.append("<soapenv:Body><urn:Recu_paiement><urn:vnum_fact>" + cardsRequest.getRefPaie()
-                    + "</urn:vnum_fact>");
+            builder.append("<soapenv:Body><urn:Recu_paiement><urn:Ref_paie>" + checkFactoryResponse.getSessionNum()
+                    + "</urn:Ref_paie>");
             builder.append("</urn:Recu_paiement></soapenv:Body></soapenv:Envelope>");
             builder.append("</request>");
             builder.append(
                     "<url_link>" + ICodeDescResponse.ADRESSE_JIRAMA + "</url_link><url_content>xml</url_content>");
             builder.append("</send_request>");
 
-            log.info(" req xml ====== [{}]", builder.toString());
+            log.info(" req xml for Recu_paiement ====== [{}]", builder.toString());
             tracking.setRequestTr(builder.toString());
             os = conn.getOutputStream();
             byte[] postDataBytes = builder.toString().getBytes();
@@ -315,7 +328,7 @@ public class ApiService {
                 log.info("result ===== [{}]", result);
                 obj = new JSONObject(result).getJSONObject("response").getJSONObject("Envelope").getJSONObject("Body");
                 log.info("obj res ===== [{}]", obj.toString());
-                if (obj.getJSONObject("Recu_paiementResponse").getString("Recu_paiementResult").contains("RP0001")) {
+                if (obj.getJSONObject("Recu_paiementResponse").getString("Recu_paiementResult").contains("RP000")) {
                     JSONObject errObj = obj.getJSONObject("Recu_paiementResponse");
                     ExceptionResponse exceptionResponse = new ExceptionResponse();
                     log.error("msg err = [{}]", errObj.get("Recu_paiementResult"));
@@ -330,7 +343,7 @@ public class ApiService {
                     ResponseResponse responseResponse = getResponse(responseRequest);
 
                     exceptionResponse.setNumber(tabErr[0]);
-                    exceptionResponse.setDescription(tabErr[1]);
+                    exceptionResponse.setDescription(tabErr[1]!=null?tabErr[1]:"");
                     genericResponse.setCode((responseResponse == null || responseResponse.getCode().equals("0000"))
                             ? ICodeDescResponse.ECHEC_CODE
                             : responseResponse.getCode());
@@ -354,7 +367,7 @@ public class ApiService {
                     // trackingService.save(tracking);
                     os.close();
                     // return genericResponse;
-                } else if (!obj.getJSONObject("Recu_paiementResponse").toString().contains("RP0001")) {
+                } else if (!obj.getJSONObject("Recu_paiementResponse").toString().contains("RP000")) {
                     log.info("succ == [{}]", obj.toString());
                     String succesOb = obj.getJSONObject("Recu_paiementResponse").getString("Recu_paiementResult");
                     log.info("succc === [{}]", succesOb.toString());
@@ -410,7 +423,7 @@ public class ApiService {
             }
             log.error("errorrr== [{}]", e.getMessage());
             genericResponse = (RecuPaiementResponse) clientAbsent(genericResponse, tracking, "paymentReceipt",
-                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC,
+                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC+e.getMessage(),
                     request.getRequestURI(), tab[1]);
             // return genericResponse;
 
@@ -568,7 +581,7 @@ public class ApiService {
             }
             log.error("errorrr== [{}]", e.getMessage());
             genericResponse = (CheckCustomerResponse) clientAbsent(genericResponse, tracking, "checkClient",
-                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC,
+                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC+e.getMessage(),
                     request.getRequestURI(), tab[1]);
             // return genericResponse;
 
@@ -754,7 +767,7 @@ public class ApiService {
             }
             log.error("errorrr== [{}]", e.getMessage());
             genericResponse = (GetBillsByRefResponse) clientAbsent(genericResponse, tracking, "getBillsByRef",
-                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC,
+                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC+e.getMessage(),
                     request.getRequestURI(), tab[1]);
 
         }
@@ -913,7 +926,7 @@ public class ApiService {
             }
             log.error("errorrr== [{}]", e.getMessage());
             genericResponse = (GetAccountResponse) clientAbsent(genericResponse, tracking, "getBillerAccount",
-                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC,
+                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC+e.getMessage(),
                     request.getRequestURI(), tab[1]);
 
         }
@@ -1053,7 +1066,7 @@ public class ApiService {
             }
             log.error("errorrr== [{}]", e.getMessage());
             genericResponse = (GetBillersResponse) clientAbsent(genericResponse, tracking, "getBiller",
-                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC,
+                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC+e.getMessage(),
                     request.getRequestURI(), tab[1]);
 
         }
@@ -1161,7 +1174,7 @@ public class ApiService {
             }
             log.error("errorrr== [{}]", e.getMessage());
             genericResponse = (GetBillFeesResponse) clientAbsent(genericResponse, tracking, "getBillFees",
-                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC,
+                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC+e.getMessage(),
                     request.getRequestURI(), tab[1]);
 
         }
@@ -1394,7 +1407,7 @@ public class ApiService {
             }
             log.error("errorrr== [{}]", e.getMessage());
             genericResponse = (PayementResponse) clientAbsent(genericResponse, tracking, "payBill",
-                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC,
+                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC+e.getMessage(),
                     request.getRequestURI(), tab[1]);
 
         }
@@ -1547,7 +1560,7 @@ public class ApiService {
             }
             log.error("errorrr== [{}]", e.getMessage());
             genericResponse = (BillerByCodeResponse) clientAbsent(genericResponse, tracking, "getBillerByCode",
-                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC,
+                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC+e.getMessage(),
                     request.getRequestURI(), tab[1]);
 
         }
@@ -1665,7 +1678,7 @@ public class ApiService {
             log.error("errorrr 0== [{}]", e.getMessage());
             e.printStackTrace();
             genericResponse = (FactureDispoResponse) clientAbsent(genericResponse, tracking, request.getRequestURI(),
-                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC,
+                    ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC+e.getMessage(),
                     request.getRequestURI(), tab[1]);
             // return genericResponse;
 

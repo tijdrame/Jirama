@@ -87,15 +87,16 @@ public class ApiResource {
 
     @PostMapping(produces = { MediaType.APPLICATION_XML_VALUE,
             MediaType.APPLICATION_JSON_VALUE }, path = "/paymentReceipt")
-    public ResponseEntity<RecuPaiementResponse> recuPaiement(@RequestBody PaymentReceiptRequest paymentReceiptRequest,
+    public ResponseEntity<RecuPaiementResponse> recuPaiement(@RequestBody RecuPaiementRequest cardsRequest,
             HttpServletRequest request) throws URISyntaxException {
-        log.debug("REST request to recuPaiement : {}", paymentReceiptRequest);
-        RecuPaiementRequest cardsRequest = new RecuPaiementRequest();
+        log.debug("REST request to recuPaiement : {}", cardsRequest);
+        /*RecuPaiementRequest cardsRequest = new RecuPaiementRequest();
         cardsRequest.setRefPaie(paymentReceiptRequest.getPayBillRef());
         cardsRequest.setLangue(paymentReceiptRequest.getLangue());
-        cardsRequest.setBillerCode(paymentReceiptRequest.getBillerCode());
+        cardsRequest.setBillerCode(paymentReceiptRequest.getBillerCode());*/
         RecuPaiementResponse response = new RecuPaiementResponse();
-        if (controleParam(cardsRequest.getRefPaie()) || controleParam(cardsRequest.getLangue())) {
+        if (controleParam(cardsRequest.getCashingRef()) || controleParam(cardsRequest.getLangue())||
+            controleParam(cardsRequest.getVnumFact())|| controleParam(cardsRequest.getBillerCode())) {
             response.setCode(ICodeDescResponse.PARAM_ABSENT_CODE);
             response.setDateResponse(Instant.now());
             response.setDescription(ICodeDescResponse.PARAM_DESCRIPTION);
