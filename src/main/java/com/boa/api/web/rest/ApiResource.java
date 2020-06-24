@@ -96,7 +96,7 @@ public class ApiResource {
         cardsRequest.setBillerCode(paymentReceiptRequest.getBillerCode());*/
         RecuPaiementResponse response = new RecuPaiementResponse();
         if (controleParam(cardsRequest.getCashingRef()) || controleParam(cardsRequest.getLangue())||
-            controleParam(cardsRequest.getVnumFact())|| controleParam(cardsRequest.getBillerCode())) {
+            controleParam(cardsRequest.getBillNum())|| controleParam(cardsRequest.getBillerCode())) {
             response.setCode(ICodeDescResponse.PARAM_ABSENT_CODE);
             response.setDateResponse(Instant.now());
             response.setDescription(ICodeDescResponse.PARAM_DESCRIPTION);

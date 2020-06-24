@@ -282,7 +282,7 @@ public class ApiService {
             checkFactoryRequest.setBillerCode(cardsRequest.getBillerCode());
             checkFactoryRequest.setLangue(cardsRequest.getLangue());
             checkFactoryRequest.setRefenca(cardsRequest.getCashingRef());
-            checkFactoryRequest.setVnumFact(cardsRequest.getVnumFact());
+            checkFactoryRequest.setVnumFact(cardsRequest.getBillNum());
             CheckFactoryResponse checkFactoryResponse = checkFactory(checkFactoryRequest, request);
             if(checkFactoryResponse==null || checkFactoryResponse.getBillAmount()==null){
                 genericResponse = (RecuPaiementResponse) clientAbsent(genericResponse, tracking, "getBill in recu facture",

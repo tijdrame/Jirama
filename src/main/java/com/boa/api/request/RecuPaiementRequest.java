@@ -5,7 +5,7 @@ package com.boa.api.request;
  */
 public class RecuPaiementRequest {
 
-    private String /*refPaie,*/ vnumFact, cashingRef;
+    private String /*refPaie,*/ billNum, cashingRef;
     private String langue, billerCode;
 
     /*public String getRefPaie() {
@@ -32,14 +32,7 @@ public class RecuPaiementRequest {
         this.billerCode = billerCode;
     }
 
-    public String getVnumFact() {
-        return this.vnumFact;
-    }
-
-    public void setVnumFact(String vnumFact) {
-        this.vnumFact = vnumFact;
-    }
-
+    
     public String getCashingRef() {
         return this.cashingRef;
     }
@@ -48,11 +41,19 @@ public class RecuPaiementRequest {
         this.cashingRef = cashingRef;
     }
 
+    public String getBillNum() {
+        return this.billNum;
+    }
+
+    public void setBillNum(String billNum) {
+        this.billNum = billNum;
+    }
+
     
     @Override
     public String toString() {
         return "{" +
-            " vnumFact='" + vnumFact + "'" +
+            " billNum='" + billNum + "'" +
             ", cashingRef='" + cashingRef + "'" +
             ", langue='" + langue + "'" +
             ", billerCode='" + billerCode + "'" +
