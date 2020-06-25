@@ -262,6 +262,7 @@ public class ApiService {
     }
 
     public RecuPaiementResponse recuPaiement(RecuPaiementRequest cardsRequest, HttpServletRequest request) {
+        log.info("Enter in recuPaiement == [{}]",cardsRequest);
         ParamFiliale filiale = paramFilialeRepository.findByCodeFiliale("checkFactory");
         Tracking tracking = new Tracking();
         RecuPaiementResponse genericResponse = new RecuPaiementResponse();
@@ -284,13 +285,15 @@ public class ApiService {
             checkFactoryRequest.setRefenca(cardsRequest.getCashingRef());
             checkFactoryRequest.setVnumFact(cardsRequest.getBillNum());
             CheckFactoryResponse checkFactoryResponse = checkFactory(checkFactoryRequest, request);
-            if(checkFactoryResponse==null || checkFactoryResponse.getBillAmount()==null){
+            if(checkFactoryResponse==null 
+            ||(!checkFactoryResponse.getExceptionResponse().getNumber().equals("P0000")
+            && checkFactoryResponse.getBillAmount()==null)){
                 genericResponse = (RecuPaiementResponse) clientAbsent(genericResponse, tracking, "getBill in recu facture",
                         ICodeDescResponse.ECHEC_CODE, ICodeDescResponse.FACTURE_NON_TROUVE, request.getRequestURI(),
                         tab[1]);
                         return genericResponse;
             }
-
+            String numSession = checkFactoryResponse.getSessionNum()!=null?checkFactoryResponse.getSessionNum():checkFactoryResponse.getExceptionResponse().getDescription();
             URL url = new URL(filiale.getEndPoint());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
@@ -302,7 +305,8 @@ public class ApiService {
             builder.append("<send_request><request>");
             builder.append(
                     "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:WebservicePlus\">");
-            builder.append("<soapenv:Body><urn:Recu_paiement><urn:Ref_paie>" + checkFactoryResponse.getSessionNum()
+            builder.append("<soapenv:Body><urn:Recu_paiement><urn:Ref_paie>" + 
+            numSession
                     + "</urn:Ref_paie>");
             builder.append("</urn:Recu_paiement></soapenv:Body></soapenv:Envelope>");
             builder.append("</request>");
