@@ -285,6 +285,7 @@ public class ApiService {
             checkFactoryRequest.setRefenca(cardsRequest.getCashingRef());
             checkFactoryRequest.setVnumFact(cardsRequest.getBillNum());
             CheckFactoryResponse checkFactoryResponse = checkFactory(checkFactoryRequest, request);
+            log.info("CheckFactoryResponse = [{}]", checkFactoryResponse);
             if(checkFactoryResponse==null 
             ||(!checkFactoryResponse.getExceptionResponse().getNumber().equals("P0000")
             && checkFactoryResponse.getBillAmount()==null)){
@@ -293,7 +294,8 @@ public class ApiService {
                         tab[1]);
                         return genericResponse;
             }
-            String numSession = checkFactoryResponse.getSessionNum()!=null?checkFactoryResponse.getSessionNum():checkFactoryResponse.getExceptionResponse().getDescription();
+            String  numSession = checkFactoryResponse.getSessionNum()!=null?checkFactoryResponse.getSessionNum():checkFactoryResponse.getExceptionResponse().getDescription();
+            log.info("after test prepare to send with numSession= [{}]", numSession);
             URL url = new URL(filiale.getEndPoint());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
