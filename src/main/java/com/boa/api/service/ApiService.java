@@ -159,8 +159,8 @@ public class ApiService {
                     String[] tabErr = new String[2];
 
                     tabErr = errObj.get("Check_facture_ptfResult").toString().split("#");
-                    exceptionResponse.setNumber(tabErr[0]);
-                    exceptionResponse.setDescription(tabErr[1]);
+                    exceptionResponse.setNumber(tabErr[0].trim());
+                    exceptionResponse.setDescription(tabErr[1].trim());
                     ResponseRequest responseRequest = new ResponseRequest();
                     responseRequest.setBillerCode(cardsRequest.getBillerCode().toUpperCase());
                     responseRequest.setLangue(cardsRequest.getLangue());
@@ -285,16 +285,17 @@ public class ApiService {
             checkFactoryRequest.setRefenca(cardsRequest.getCashingRef());
             checkFactoryRequest.setVnumFact(cardsRequest.getBillNum());
             CheckFactoryResponse checkFactoryResponse = checkFactory(checkFactoryRequest, request);
-            log.info("CheckFactoryResponse = [{}]", checkFactoryResponse);
+            log.info("CheckFactoryResponse <==> [{}]", checkFactoryResponse.toString());
             if(checkFactoryResponse==null 
-            ||(!checkFactoryResponse.getExceptionResponse().getNumber().equals("P0000")
+            ||(checkFactoryResponse.getExceptionResponse()!=null && !checkFactoryResponse.getExceptionResponse().getNumber().contains("P0000")
             && checkFactoryResponse.getBillAmount()==null)){
                 genericResponse = (RecuPaiementResponse) clientAbsent(genericResponse, tracking, "getBill in recu facture",
                         ICodeDescResponse.ECHEC_CODE, ICodeDescResponse.FACTURE_NON_TROUVE, request.getRequestURI(),
                         tab[1]);
                         return genericResponse;
             }
-            String  numSession = checkFactoryResponse.getSessionNum()!=null?checkFactoryResponse.getSessionNum():checkFactoryResponse.getExceptionResponse().getDescription();
+            String  numSession = checkFactoryResponse.getSessionNum()!=null?checkFactoryResponse.getSessionNum().trim().replace("%", "")
+            :checkFactoryResponse.getExceptionResponse().getDescription().trim().replace("%", "");
             log.info("after test prepare to send with numSession= [{}]", numSession);
             URL url = new URL(filiale.getEndPoint());
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -339,16 +340,22 @@ public class ApiService {
                     ExceptionResponse exceptionResponse = new ExceptionResponse();
                     log.error("msg err = [{}]", errObj.get("Recu_paiementResult"));
                     String[] tabErr = new String[2];
-
-                    tabErr = errObj.get("Recu_paiementResult").toString().split("#");
+                    String errResult = "";
                     ResponseRequest responseRequest = new ResponseRequest();
+                    if(errObj.getString("Recu_paiementResult").contains("#")){
+                        tabErr = errObj.get("Recu_paiementResult").toString().split("#");
+                        responseRequest.setRetourCode(tabErr[0].trim());
+                    }else {
+                        errResult = errObj.getString("Recu_paiementResult");
+                        responseRequest.setRetourCode(errResult);
+                    }
+
                     responseRequest.setBillerCode(cardsRequest.getBillerCode().toUpperCase());
                     responseRequest.setLangue(cardsRequest.getLangue());
-                    responseRequest.setRetourCode(tabErr[0].trim());
                     responseRequest.setServiceName(ICodeDescResponse.SERVICE_RECU_PAIEMENT);
                     ResponseResponse responseResponse = getResponse(responseRequest);
 
-                    exceptionResponse.setNumber(tabErr[0]);
+                    exceptionResponse.setNumber(tabErr[0]!=null?tabErr[0]:errResult);
                     exceptionResponse.setDescription(tabErr[1]!=null?tabErr[1]:"");
                     genericResponse.setCode((responseResponse == null || responseResponse.getCode().equals("0000"))
                             ? ICodeDescResponse.ECHEC_CODE

@@ -24,5 +24,13 @@ public class ExceptionResponse {
         this.description = description;
     }
 
+    @Override
+    public String toString() {
+        return "{" +
+            " number='" + number + "'" +
+            ", description='" + description + "'" +
+            "}";
+    }
+
 
 }
