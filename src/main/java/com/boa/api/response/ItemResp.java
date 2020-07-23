@@ -8,10 +8,10 @@ public class ItemResp  {
     private String billNum;    
     private String custumerRef;    
     private String billDate;    
-    private Double billAmount;    
+    private Integer billAmount;    
     private String requierNumber;
     private String customerName, sessionNum;
-    private Double feeAmount;
+    private Integer feeAmount;
 
     public String getBillNum() {
         return this.billNum;
@@ -37,11 +37,11 @@ public class ItemResp  {
         this.billDate = billDate;
     }
 
-    public Double getBillAmount() {
+    public Integer getBillAmount() {
         return this.billAmount;
     }
 
-    public void setBillAmount(Double billAmount) {
+    public void setBillAmount(Integer billAmount) {
         this.billAmount = billAmount;
     }
 
@@ -61,11 +61,11 @@ public class ItemResp  {
         this.customerName = customerName;
     }
 
-    public Double getFeeAmount() {
+    public Integer getFeeAmount() {
         return this.feeAmount;
     }
 
-    public void setFeeAmount(Double feeAmount) {
+    public void setFeeAmount(Integer feeAmount) {
         this.feeAmount = feeAmount;
     }
 

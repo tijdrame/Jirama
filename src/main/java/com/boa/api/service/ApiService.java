@@ -196,8 +196,8 @@ public class ApiService {
                             .getString("Check_facture_ptfResult");
                     log.info("succc === [{}]", succesOb.toString());
                     String[] tabSuccess = succesOb.split("#");
-
-                    genericResponse.setBillAmount(Integer.valueOf(tabSuccess[3].trim()));
+                    Integer amount = Integer.valueOf(tabSuccess[3].trim())*100;
+                    genericResponse.setBillAmount(amount);
                     genericResponse.setCustomerName(tabSuccess[5].trim());
                     genericResponse.setRequierNumber(tabSuccess[4].trim());
                     genericResponse.setBillNum(tabSuccess[0].trim());
@@ -227,7 +227,7 @@ public class ApiService {
                     billFeesRequest.setMontant(genericResponse.getBillAmount().toString());
                     billFeesRequest.setTypeCanal(cardsRequest.getChannel());
                     GetBillFeesResponse billFeesResponse = getBillFees(billFeesRequest, request);
-                    if(billFeesResponse != null ) genericResponse.setFeeAmount(billFeesResponse.getMontantFrais());
+                    if(billFeesResponse != null ) genericResponse.setFeeAmount(billFeesResponse.getMontantFrais().intValue()*100);
                             
                 
                     os.close();
@@ -254,8 +254,6 @@ public class ApiService {
             genericResponse = (CheckFactoryResponse) clientAbsent(genericResponse, tracking, "getBill",
                     ICodeDescResponse.FILIALE_ABSENT_CODE, ICodeDescResponse.FILIALE_ABSENT_DESC+e.getMessage(),
                     request.getRequestURI(), tab[1]);
-            // return genericResponse;
-
         }
         trackingService.save(tracking);
         return genericResponse;
@@ -719,7 +717,7 @@ public class ApiService {
                     for (int i = 0; i < tabSuccess.length; i++) {
                         String[] tabTemp = tabSuccess[i].split("#");
                         ItemResp itemResp = new ItemResp();
-                        itemResp.setBillAmount(Double.valueOf(tabTemp[3]));
+                        itemResp.setBillAmount(Integer.valueOf(tabTemp[3])*100);
                         itemResp.setBillDate(tabTemp[2]);
                         itemResp.setBillNum(tabTemp[0]);
                         itemResp.setRequierNumber(tabTemp[4]);
@@ -732,7 +730,7 @@ public class ApiService {
                     billFeesRequest.setMontant(itemResp.getBillAmount().toString());
                     billFeesRequest.setTypeCanal(cardsRequest.getChannel());
                     GetBillFeesResponse billFeesResponse = getBillFees(billFeesRequest, request);
-                    if(billFeesResponse != null ) itemResp.setFeeAmount(billFeesResponse.getMontantFrais());
+                    if(billFeesResponse != null ) itemResp.setFeeAmount(billFeesResponse.getMontantFrais().intValue()*100);
 
                         genericResponse.getBillList().add(itemResp);
                     }
@@ -1183,7 +1181,7 @@ public class ApiService {
             try {
                 os.close();
             } catch (IOException e1) {
-                log.error("errorrr== [{}]", e1.getMessage());
+                log.error("errorrr==> [{}]", e1.getMessage());
             }
             log.error("errorrr== [{}]", e.getMessage());
             genericResponse = (GetBillFeesResponse) clientAbsent(genericResponse, tracking, "getBillFees",
@@ -1276,7 +1274,8 @@ public class ApiService {
 
             builder.append("<urn:vdate_paie>" + payementRequest.getPaymentDate() + "</urn:vdate_paie>");
             builder.append("<urn:vtel_client>" + payementRequest.getPhoneNumber() + "</urn:vtel_client>");
-            builder.append("<urn:vmontant>" + checkFactoryResponse.getBillAmount() + "</urn:vmontant>");
+            Integer amount = checkFactoryResponse.getBillAmount() / 100;
+            builder.append("<urn:vmontant>" + amount + "</urn:vmontant>");
             builder.append("<urn:vtel_jirama>" + billerByCodeResponse.getTELEPHONE() + "</urn:vtel_jirama>");
             builder.append("</urn:Paie_Mobile></soapenv:Body></soapenv:Envelope>");
             builder.append("</request>");
@@ -1284,8 +1283,9 @@ public class ApiService {
                     "<url_link>" + ICodeDescResponse.ADRESSE_JIRAMA + "</url_link><url_content>xml</url_content>");
             builder.append("<compteDebit>" + payementRequest.getCustomerAccount() + "</compteDebit>");
             builder.append("<compteCredit>" + accountResponse.getNumAccount() + "</compteCredit>");
-            builder.append("<montantFact>" +checkFactoryResponse.getBillAmount() + "</montantFact>");
-            builder.append("<montantFrais>" + billFeesResponse.getMontantFrais() + "</montantFrais>");
+            builder.append("<montantFact>" +amount + "</montantFact>");
+            Double fees = billFeesResponse.getMontantFrais();
+            builder.append("<montantFrais>" + fees + "</montantFrais>");
             builder.append("<libelle>" + payementRequest.getDescription() + "</libelle>");
             builder.append("<deviseFact>" +billerByCodeResponse.getDEVISE() + "</deviseFact>");
             builder.append("<dispo>" +"DISPONIBLE" + "</dispo>"); //FIXME

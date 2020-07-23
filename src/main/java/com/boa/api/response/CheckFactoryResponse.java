@@ -15,7 +15,7 @@ public class CheckFactoryResponse extends GenericResponse {
     private String requierNumber;
     private String customerName;
     private String sessionNum;
-    private Double feeAmount;
+    private Integer feeAmount;
     private ExceptionResponse exceptionResponse;
 
     
@@ -84,11 +84,11 @@ public class CheckFactoryResponse extends GenericResponse {
         this.exceptionResponse = exceptionResponse;
     }
 
-    public Double getFeeAmount() {
+    public Integer getFeeAmount() {
         return this.feeAmount;
     }
 
-    public void setFeeAmount(Double feeAmount) {
+    public void setFeeAmount(Integer feeAmount) {
         this.feeAmount = feeAmount;
     }
 
@@ -106,5 +106,6 @@ public class CheckFactoryResponse extends GenericResponse {
             ", exceptionResponse='" + getExceptionResponse() + "'" +
             "}";
     }
+   
 
 }
