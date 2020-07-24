@@ -121,4 +121,5 @@ jhipster:
 # https://www.jhipster.tech/common-application-properties/
 # ===================================================================
 
-# application:
+application:
+  jirama: tidiane #http://192.168.222.95/WEBSERVICE_ORACLE_WEB/awws/WebservicePlus.awws

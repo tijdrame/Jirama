@@ -22,7 +22,7 @@ public interface ICodeDescResponse {
     public static String PARAM_ABSENT_DESC = "Parametre non trouve";
     public static String SERVICE_ABSENT_DESC = "Service non parametre";
     public static String RESPONSE_INC = "Quelque chose d'innatendu s'est produit, veuillez contacter l'Administrateur";
-    public static String ADRESSE_JIRAMA = "http://192.168.222.95/WEBSERVICE_ORACLE_WEB/awws/WebservicePlus.awws";
+    //public static String ADRESSE_JIRAMA = "http://192.168.222.95/WEBSERVICE_ORACLE_WEB/awws/WebservicePlus.awws";
     //public static String ADRESSE_JIRAMA = "http://172.17.178.5:8088/mockWebservicePlusSOAPBinding";//10.132.4.97
     public static String SERVICE_CHECK_FACTURE_PTF = "Check_facture_ptf"; 
     public static String SERVICE_CHECK_REF_PTF = "Check_ref_ptf";

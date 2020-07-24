@@ -10,4 +10,15 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @ConfigurationProperties(prefix = "application", ignoreUnknownFields = false)
 public class ApplicationProperties {
+
+    private String jirama;
+
+    public String getJirama() {
+        return this.jirama;
+    }
+
+    public void setJirama(String jirama) {
+        this.jirama = jirama;
+    }
+
 }

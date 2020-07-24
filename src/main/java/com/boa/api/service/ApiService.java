@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.boa.api.config.ApplicationProperties;
 import com.boa.api.domain.BillerT;
 import com.boa.api.domain.ParamFiliale;
 import com.boa.api.domain.Tracking;
@@ -71,15 +72,17 @@ public class ApiService {
     private final UserService userService;
     private final TransactionGlobalService transactionGlobalService;
     private final BillerTService billerTService;
+    private final ApplicationProperties applicationProperties;
 
     public ApiService(ParamFilialeRepository paramFilialeRepository, TrackingService trackingService,
             UserService userService, TransactionGlobalService transactionGlobalService,
-            BillerTService billerTService) {
+            BillerTService billerTService, ApplicationProperties applicationProperties) {
         this.paramFilialeRepository = paramFilialeRepository;
         this.trackingService = trackingService;
         this.userService = userService;
         this.transactionGlobalService = transactionGlobalService;
         this.billerTService = billerTService;
+        this.applicationProperties = applicationProperties;
     }
 
     // getBill
@@ -119,7 +122,7 @@ public class ApiService {
             builder.append("</urn:Check_facture_ptf></soapenv:Body></soapenv:Envelope>");
             builder.append("</request>");
             builder.append(
-                    "<url_link>" + ICodeDescResponse.ADRESSE_JIRAMA + "</url_link><url_content>xml</url_content>");
+                    "<url_link>" + applicationProperties.getJirama() + "</url_link><url_content>xml</url_content>");
             builder.append("</send_request>");
 
             /*
@@ -312,7 +315,7 @@ public class ApiService {
             builder.append("</urn:Recu_paiement></soapenv:Body></soapenv:Envelope>");
             builder.append("</request>");
             builder.append(
-                    "<url_link>" + ICodeDescResponse.ADRESSE_JIRAMA + "</url_link><url_content>xml</url_content>");
+                    "<url_link>" + applicationProperties.getJirama() + "</url_link><url_content>xml</url_content>");
             builder.append("</send_request>");
 
             log.info(" req xml for Recu_paiement ====== [{}]", builder.toString());
@@ -476,7 +479,7 @@ public class ApiService {
             builder.append("</urn:Check_client></soapenv:Body></soapenv:Envelope>");
             builder.append("</request>");
             builder.append(
-                    "<url_link>" + ICodeDescResponse.ADRESSE_JIRAMA + "</url_link><url_content>xml</url_content>");
+                    "<url_link>" + applicationProperties.getJirama() + "</url_link><url_content>xml</url_content>");
             builder.append("</send_request>");
 
             log.info(" req xml ====== [{}]", builder.toString());
@@ -635,7 +638,7 @@ public class ApiService {
             builder.append("</urn:Check_ref_ptf></soapenv:Body></soapenv:Envelope>");
             builder.append("</request>");
             builder.append(
-                    "<url_link>" + ICodeDescResponse.ADRESSE_JIRAMA + "</url_link><url_content>xml</url_content>");
+                    "<url_link>" + applicationProperties.getJirama() + "</url_link><url_content>xml</url_content>");
             builder.append("</send_request>");
             /*
              * String jsonString = ""; jsonString = new JSONObject().put("vnum_fact",
@@ -1280,7 +1283,7 @@ public class ApiService {
             builder.append("</urn:Paie_Mobile></soapenv:Body></soapenv:Envelope>");
             builder.append("</request>");
             builder.append(
-                    "<url_link>" + ICodeDescResponse.ADRESSE_JIRAMA + "</url_link><url_content>xml</url_content>");
+                    "<url_link>" + applicationProperties.getJirama() + "</url_link><url_content>xml</url_content>");
             builder.append("<compteDebit>" + payementRequest.getCustomerAccount() + "</compteDebit>");
             builder.append("<compteCredit>" + accountResponse.getNumAccount() + "</compteCredit>");
             builder.append("<montantFact>" +amount + "</montantFact>");
