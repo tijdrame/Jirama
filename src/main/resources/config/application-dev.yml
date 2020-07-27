@@ -122,4 +122,4 @@ jhipster:
 # ===================================================================
 
 application:
-  jirama: tidiane #http://192.168.222.95/WEBSERVICE_ORACLE_WEB/awws/WebservicePlus.awws
+  jirama: http://172.17.178.5:8088/mockJirama #http://192.168.222.95/WEBSERVICE_ORACLE_WEB/awws/WebservicePlus.awws
