@@ -1221,7 +1221,7 @@ public class ApiService {
             CheckFactoryResponse checkFactoryResponse = checkFactory(checkFactoryRequest, request);
             if(checkFactoryResponse==null || checkFactoryResponse.getBillAmount()==null){
                 genericResponse = (PayementResponse) clientAbsent(genericResponse, tracking, "getBill in paiement",
-                        ICodeDescResponse.ECHEC_CODE, ICodeDescResponse.FACTURE_NON_TROUVE, request.getRequestURI(),
+                        checkFactoryResponse.getCode(), checkFactoryResponse.getDescription(), request.getRequestURI(),
                         tab[1]);
                         return genericResponse;
             }
