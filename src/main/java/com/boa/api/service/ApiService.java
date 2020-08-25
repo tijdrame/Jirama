@@ -123,16 +123,12 @@ public class ApiService {
                     "<url_link>" + applicationProperties.getJirama() + "</url_link><url_content>xml</url_content>");
             builder.append("</send_request>");*/
             builder.append("<send_request><request>");
-            builder.append(
-                    "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:WebservicePlus\">");
-            builder.append("<soapenv:Body><urn:Check_fact_cbarre><urn:vnum_fact>" + cardsRequest.getVnumFact()
-                    + "</urn:vnum_fact>");
-            builder.append("<urn:telcli>"
-                    + cardsRequest.getTelcli() + "</urn:telcli>");
+            builder.append("<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:WebservicePlus\">");
+            builder.append("<soapenv:Body><urn:Check_fact_cbarre><urn:vnum_fact>"+cardsRequest.getVnumFact()+"</urn:vnum_fact>");
+            builder.append("<urn:telcli>"+cardsRequest.getTelcli()+"</urn:telcli>");
             builder.append("</urn:Check_fact_cbarre></soapenv:Body></soapenv:Envelope>");
             builder.append("</request>");
-            builder.append(
-                    "<url_link>" + applicationProperties.getJirama() + "</url_link><url_content>xml</url_content>");
+            builder.append("<url_link>" + applicationProperties.getJirama() + "</url_link><url_content>xml</url_content>");
             builder.append("</send_request>");
 
             /*
@@ -160,18 +156,18 @@ public class ApiService {
                 // System.out.println("err=" + result);
                 log.info("resp ===== [{}]", result);
                 obj = new JSONObject(result).getJSONObject("response").getJSONObject("Envelope").getJSONObject("Body");
-                log.info("test== [{}]", obj.getJSONObject("Check_facture_ptfResponse"));
-                if (obj.getJSONObject("Check_facture_ptfResponse")
+                log.info("test== [{}]", obj.getJSONObject("Check_fact_cbarreResponse"));
+                if (obj.getJSONObject("Check_fact_cbarreResponse")
                         // obj.getJSONObject("Check_facture_ptfResponse")
                         .toString().contains("P000")
-                        || obj.getJSONObject("Check_facture_ptfResponse").toString().contains("N000")
-                        || obj.getJSONObject("Check_facture_ptfResponse").toString().contains("?")) {
-                    JSONObject errObj = obj.getJSONObject("Check_facture_ptfResponse");
+                        || obj.getJSONObject("Check_fact_cbarreResponse").toString().contains("N000")
+                        || obj.getJSONObject("Check_fact_cbarreResponse").toString().contains("?")) {
+                    JSONObject errObj = obj.getJSONObject("Check_fact_cbarreResponse");
                     ExceptionResponse exceptionResponse = new ExceptionResponse();
-                    log.error("msg err = [{}]", errObj.get("Check_facture_ptfResult"));
+                    log.error("msg err = [{}]", errObj.get("Check_fact_cbarreResult"));
                     String[] tabErr = new String[2];
 
-                    tabErr = errObj.get("Check_facture_ptfResult").toString().split("#");
+                    tabErr = errObj.get("Check_fact_cbarreResult").toString().split("#");
                     exceptionResponse.setNumber(tabErr[0].trim());
                     exceptionResponse.setDescription(tabErr[1].trim());
                     ResponseRequest responseRequest = new ResponseRequest();
@@ -203,10 +199,10 @@ public class ApiService {
                     // trackingService.save(tracking);
                     os.close();
                     // return genericResponse;
-                } else if (obj.toString().contains("Check_facture_ptfResult")) {
+                } else if (obj.toString().contains("Check_fact_cbarreResult")) {
                     log.info("succ == [{}]", obj.toString());
-                    String succesOb = obj.getJSONObject("Check_facture_ptfResponse")
-                            .getString("Check_facture_ptfResult");
+                    String succesOb = obj.getJSONObject("Check_fact_cbarreResponse")
+                            .getString("Check_fact_cbarreResult");
                     log.info("succc === [{}]", succesOb.toString());
                     String[] tabSuccess = succesOb.split("#");
                     Integer amount = Integer.valueOf(tabSuccess[3].trim())*100;

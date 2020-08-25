@@ -73,9 +73,13 @@ public class ApiResource {
         cardsRequest.setBillerCode(billRequest.getBillerCode());
         cardsRequest.setChannel(billRequest.getChannelType());
         CheckFactoryResponse response = new CheckFactoryResponse();
-        if (controleParam(cardsRequest.getVnumFact()) || controleParam(cardsRequest.getTelcli())
+        /*if (controleParam(cardsRequest.getVnumFact()) || controleParam(cardsRequest.getTelcli())
                 || controleParam(cardsRequest.getRefenca()) || controleParam(cardsRequest.getLangue())
-                || controleParam(cardsRequest.getChannel())) {
+                || controleParam(cardsRequest.getChannel())) {*/
+
+                    if (controleParam(cardsRequest.getVnumFact()) || controleParam(cardsRequest.getTelcli())
+                    || controleParam(cardsRequest.getLangue())
+                    || controleParam(cardsRequest.getChannel())) {
             response.setCode(ICodeDescResponse.PARAM_ABSENT_CODE);
             response.setDateResponse(Instant.now());
             response.setDescription(ICodeDescResponse.PARAM_DESCRIPTION);
