@@ -9,9 +9,7 @@ import java.net.URL;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
-
 import javax.servlet.http.HttpServletRequest;
-
 import com.boa.api.config.ApplicationProperties;
 import com.boa.api.domain.BillerT;
 import com.boa.api.domain.ParamFiliale;
@@ -112,7 +110,7 @@ public class ApiService {
             conn.setRequestProperty("Accept", "application/xml");
 
             StringBuilder builder = new StringBuilder();
-            builder.append("<send_request><request>");
+           /* builder.append("<send_request><request>");
             builder.append(
                     "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:WebservicePlus\">");
             builder.append("<soapenv:Body><urn:Check_facture_ptf><urn:vnum_fact>" + cardsRequest.getVnumFact()
@@ -120,6 +118,18 @@ public class ApiService {
             builder.append("<urn:vRefenca>" + cardsRequest.getRefenca() + "</urn:vRefenca><urn:telcli>"
                     + cardsRequest.getTelcli() + "</urn:telcli>");
             builder.append("</urn:Check_facture_ptf></soapenv:Body></soapenv:Envelope>");
+            builder.append("</request>");
+            builder.append(
+                    "<url_link>" + applicationProperties.getJirama() + "</url_link><url_content>xml</url_content>");
+            builder.append("</send_request>");*/
+            builder.append("<send_request><request>");
+            builder.append(
+                    "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\" xmlns:urn=\"urn:WebservicePlus\">");
+            builder.append("<soapenv:Body><urn:Check_fact_cbarre><urn:vnum_fact>" + cardsRequest.getVnumFact()
+                    + "</urn:vnum_fact>");
+            builder.append("<urn:telcli>"
+                    + cardsRequest.getTelcli() + "</urn:telcli>");
+            builder.append("</urn:Check_fact_cbarre></soapenv:Body></soapenv:Envelope>");
             builder.append("</request>");
             builder.append(
                     "<url_link>" + applicationProperties.getJirama() + "</url_link><url_content>xml</url_content>");
