@@ -236,11 +236,11 @@ public class ApiResource {
     consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE },path = "/payBill")
 public ResponseEntity<PayementResponse> payBill(@RequestBody PayementRequest payementRequest,
         HttpServletRequest request) throws URISyntaxException {
-    log.debug("REST request to payBill : {}", payementRequest);
+    log.debug("REST request to payBill =: {}", payementRequest);
 
     PayementResponse response = new PayementResponse();
     if (controleParam(payementRequest.getBillerCode()) || controleParam(payementRequest.getBillNum())
-            || controleParam(payementRequest.getCashingRef())|| controleParam(payementRequest.getPaymentDate())
+            || controleParam(payementRequest.getPaymentDate())
             || controleParam(payementRequest.getPhoneNumber())|| controleParam(payementRequest.getDeviceId())
             || controleParam(payementRequest.getDescription())|| controleParam(payementRequest.getLangue())
             || controleParam(payementRequest.getCustomerAccount())|| controleParam(payementRequest.getBillRefTrx())
