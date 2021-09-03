@@ -76,4 +76,10 @@ public class BillerTService {
         log.debug("Request to delete BillerT : {}", id);
         billerTRepository.deleteById(id);
     }
+
+    //@Transactional(readOnly = true)
+    public List<BillerT> findByCountryAndCategorie(String country, String Categorie) {
+        log.debug("Request to get all BillerTS");
+        return billerTRepository.findByPaysAndBillerCategory(country, Categorie);
+    }
 }

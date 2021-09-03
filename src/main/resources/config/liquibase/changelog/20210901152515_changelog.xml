@@ -1,0 +1,469 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="tijdr (generated)" id="1630509936234-18">
+        <createTable tableName="categorie_biller">
+            <column autoIncrement="true" name="id" type="NUMBER(19, 0)">
+                <constraints primaryKey="true" primaryKeyName="categorie_billerPK"/>
+            </column>
+            <column name="code" type="VARCHAR2(255 CHAR)"/>
+            <column name="libelle" type="VARCHAR2(255 CHAR)"/>
+        </createTable>
+    </changeSet>
+    <!-- <changeSet author="tijdr (generated)" id="1630509936234-19">
+        <createIndex indexName="IX_boa_bilm_transaction_global_tPK" tableName="boa_bilm_transaction_global_t" unique="true">
+            <column name="transaction_id"/>
+        </createIndex>
+        <addPrimaryKey columnNames="transaction_id" constraintName="boa_bilm_transaction_global_tPK" forIndexName="IX_boa_bilm_transaction_global_tPK" tableName="boa_bilm_transaction_global_t"/>
+    </changeSet> -->
+    <changeSet author="tijdr (generated)" id="1630509936234-20">
+        <addUniqueConstraint columnNames="code" constraintName="UC_CATEGORIE_BILLERCODE_COL" tableName="categorie_biller"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-21">
+        <addUniqueConstraint columnNames="libelle" constraintName="UC_CATEGORIE_BILLERLIBELLE_COL" tableName="categorie_biller"/>
+    </changeSet>
+    <!--<changeSet author="tijdr (generated)" id="1630509936234-22">
+        <addForeignKeyConstraint baseColumnNames="biller_code" baseTableName="boa_bilm_transaction_global_t" constraintName="FKt1o1v6t5gu4m7tywx7fqouger" deferrable="false" initiallyDeferred="false" referencedColumnNames="biller_id" referencedTableName="boa_bilm_biller_t" validate="true"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-23">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_ACTEUR_BANK_T" constraintName="BOA_BILM_ACTEUR_BANK_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-24">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_ACTEUR_BANK_T" constraintName="BOA_BILM_ACTEUR_BANK_T_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-25">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_BANK_USER_T" constraintName="BOA_BILM_BANK_USER_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-26">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_BILLER_CHANNEL_T" constraintName="BOA_BILM_BILLER_CHANNEL_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-27">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_BILLER_ACCOUNT_T" constraintName="BOA_BILM_BILLER_T_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-28">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_BILLER_USER_T" constraintName="BOA_BILM_BILLER_USER_T_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-29">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_DETAIL_FILE_T" constraintName="BOA_BILM_DETAIL_FILE_FK"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-30">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_DETAIL_FILE_T" constraintName="BOA_BILM_DETAIL_FILE_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-31">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_FEES_T" constraintName="BOA_BILM_FEES_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-32">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_FEES_PALIER_T" constraintName="BOA_BILM_FEES_PALIER_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-33">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_FEES_T" constraintName="BOA_BILM_FEES_T_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-34">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_FILE_STK_T" constraintName="BOA_BILM_FILE_CONTENT_FK"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-35">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_FILE_T" constraintName="BOA_BILM_FILE_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-36">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_PARAM_JOURNAL_T" constraintName="BOA_BILM_PARAM_JOURNAL_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-37">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_PART_COMMISSION_T" constraintName="BOA_BILM_PART_COMM_FK"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-38">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_PART_COMMISSION_T" constraintName="BOA_BILM_PART_COM_BILLER_FK"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-39">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_SECURITY_T" constraintName="BOA_BILM_SECURITY_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-40">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_TRANSACTION_T" constraintName="BOA_BILM_TRANSACTION_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-41">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_USER_PROFILE_T" constraintName="BOA_BILM_USER_PROFILE_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-42">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_WEBSERVICES_T" constraintName="BOA_BILM_WEBSERVICES_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-43">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_WEBSERVICES_PARAMS_T" constraintName="BOA_BILM_WS_PARAMS_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-44">
+        <dropForeignKeyConstraint baseTableName="BOA_BILM_WS_RESPONSE_T" constraintName="BOA_BILM_WS_RESPONSE_FK1"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-45">
+        <dropForeignKeyConstraint baseTableName="EMP" constraintName="SYS_C007291"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-46">
+        <dropForeignKeyConstraint baseTableName="EMP" constraintName="SYS_C007292"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-47">
+        <dropUniqueConstraint constraintName="BOA_BILM_BILLER_CODE_UK" tableName="BOA_BILM_BILLER_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-48">
+        <dropUniqueConstraint constraintName="BOA_BILM_PART_BIL_ACT_UK1" tableName="BOA_BILM_PART_COMMISSION_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-49">
+        <dropUniqueConstraint constraintName="BOA_BILM_WS_RESPONSE_T_UK1" tableName="BOA_BILM_WS_RESPONSE_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-50">
+        <dropView viewName="BOA_BILM_ACTEURS_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-51">
+        <dropView viewName="BOA_BILM_ACTEUR_BANK_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-52">
+        <dropView viewName="BOA_BILM_BANK_USER_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-53">
+        <dropView viewName="BOA_BILM_BANK_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-54">
+        <dropView viewName="BOA_BILM_BILLER_ACCOUNT_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-55">
+        <dropView viewName="BOA_BILM_BILLER_CHANNEL_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-56">
+        <dropView viewName="BOA_BILM_BILLER_USER_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-57">
+        <dropView viewName="BOA_BILM_BILLER_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-58">
+        <dropView viewName="BOA_BILM_DETAIL_FILE_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-59">
+        <dropView viewName="BOA_BILM_FEES_PALIER_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-60">
+        <dropView viewName="BOA_BILM_FEES_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-61">
+        <dropView viewName="BOA_BILM_FILE_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-62">
+        <dropView viewName="BOA_BILM_PARAM_JOURNAL_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-63">
+        <dropView viewName="BOA_BILM_PART_COMMISSION_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-64">
+        <dropView viewName="BOA_BILM_PROFILE_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-65">
+        <dropView viewName="BOA_BILM_SECURITY_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-66">
+        <dropView viewName="BOA_BILM_TRANSACTION_GLOBAL_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-67">
+        <dropView viewName="BOA_BILM_TRANSACTION_GLOBAL_W"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-68">
+        <dropView viewName="BOA_BILM_TRANSACTION_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-69">
+        <dropView viewName="BOA_BILM_USER_PROFILE_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-70">
+        <dropView viewName="BOA_BILM_WEBSERVICES_PARAMS_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-71">
+        <dropView viewName="BOA_BILM_WEBSERVICES_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-72">
+        <dropView viewName="BOA_BILM_WS_RESPONSE_V"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-73">
+        <dropTable tableName="BOA_BILM_ACTEURS_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-74">
+        <dropTable tableName="BOA_BILM_ACTEUR_BANK_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-75">
+        <dropTable tableName="BOA_BILM_BANK_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-76">
+        <dropTable tableName="BOA_BILM_BANK_USER_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-77">
+        <dropTable tableName="BOA_BILM_BILLER_ACCOUNT_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-78">
+        <dropTable tableName="BOA_BILM_BILLER_CHANNEL_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-79">
+        <dropTable tableName="BOA_BILM_BILLER_USER_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-80">
+        <dropTable tableName="BOA_BILM_DETAIL_FILE_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-81">
+        <dropTable tableName="BOA_BILM_DEVISES"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-82">
+        <dropTable tableName="BOA_BILM_FEES_PALIER_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-83">
+        <dropTable tableName="BOA_BILM_FEES_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-84">
+        <dropTable tableName="BOA_BILM_FILE_STK_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-85">
+        <dropTable tableName="BOA_BILM_FILE_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-86">
+        <dropTable tableName="BOA_BILM_PARAM_JOURNAL_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-87">
+        <dropTable tableName="BOA_BILM_PART_COMMISSION_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-88">
+        <dropTable tableName="BOA_BILM_PROFILE_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-89">
+        <dropTable tableName="BOA_BILM_SECURITY_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-90">
+        <dropTable tableName="BOA_BILM_TRANSACTION_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-91">
+        <dropTable tableName="BOA_BILM_USER_PROFILE_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-92">
+        <dropTable tableName="BOA_BILM_WEBSERVICES_PARAMS_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-93">
+        <dropTable tableName="BOA_BILM_WEBSERVICES_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-94">
+        <dropTable tableName="BOA_BILM_WS_RESPONSE_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-95">
+        <dropTable tableName="DEPT"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-96">
+        <dropTable tableName="EBA_RESTDEMO_SAMPLE_EMP"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-97">
+        <dropTable tableName="EBA_RESTDEMO_SAMPLE_GITHUB"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-98">
+        <dropTable tableName="EBA_RESTDEMO_SAMPLE_LANG"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-99">
+        <dropTable tableName="EBA_RESTDEMO_SAMPLE_URLS"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-100">
+        <dropTable tableName="EMP"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-101">
+        <dropTable tableName="SYS_TRACK_MESSAGES"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-102">
+        <dropColumn columnName="ATTRIBUTE_01" tableName="BOA_BILM_BILLER_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-103">
+        <dropColumn columnName="ATTRIBUTE_01" tableName="BOA_BILM_TRANSACTION_GLOBAL_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-104">
+        <dropColumn columnName="ATTRIBUTE_02" tableName="BOA_BILM_BILLER_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-105">
+        <dropColumn columnName="ATTRIBUTE_02" tableName="BOA_BILM_TRANSACTION_GLOBAL_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-106">
+        <dropColumn columnName="ATTRIBUTE_03" tableName="BOA_BILM_BILLER_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-107">
+        <dropColumn columnName="ATTRIBUTE_03" tableName="BOA_BILM_TRANSACTION_GLOBAL_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-108">
+        <dropColumn columnName="ATTRIBUTE_04" tableName="BOA_BILM_BILLER_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-109">
+        <dropColumn columnName="ATTRIBUTE_04" tableName="BOA_BILM_TRANSACTION_GLOBAL_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-110">
+        <dropColumn columnName="ATTRIBUTE_05" tableName="BOA_BILM_BILLER_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-111">
+        <dropColumn columnName="ATTRIBUTE_05" tableName="BOA_BILM_TRANSACTION_GLOBAL_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-112">
+        <dropColumn columnName="MESSAGE_EN" tableName="BOA_BILM_TRANSACTION_GLOBAL_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-113">
+        <dropColumn columnName="MESSAGE_FR" tableName="BOA_BILM_TRANSACTION_GLOBAL_T"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-114">
+        <dropSequence sequenceName="BOA_BILM_ACTEURS_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-115">
+        <dropSequence sequenceName="BOA_BILM_ACTEUR_BANK_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-116">
+        <dropSequence sequenceName="BOA_BILM_BANK_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-117">
+        <dropSequence sequenceName="BOA_BILM_BANK_USER_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-118">
+        <dropSequence sequenceName="BOA_BILM_BILLER_ACCOUNT_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-119">
+        <dropSequence sequenceName="BOA_BILM_BILLER_CHANNEL_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-120">
+        <dropSequence sequenceName="BOA_BILM_BILLER_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-121">
+        <dropSequence sequenceName="BOA_BILM_BILLER_USER_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-122">
+        <dropSequence sequenceName="BOA_BILM_DETAIL_FILE_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-123">
+        <dropSequence sequenceName="BOA_BILM_FEES_PALIER_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-124">
+        <dropSequence sequenceName="BOA_BILM_FEES_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-125">
+        <dropSequence sequenceName="BOA_BILM_FILE_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-126">
+        <dropSequence sequenceName="BOA_BILM_FILE_STK_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-127">
+        <dropSequence sequenceName="BOA_BILM_JOURNAL_NUMERO_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-128">
+        <dropSequence sequenceName="BOA_BILM_PARAM_JOURNAL_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-129">
+        <dropSequence sequenceName="BOA_BILM_PART_COMMISSION_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-130">
+        <dropSequence sequenceName="BOA_BILM_SECURITY_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-131">
+        <dropSequence sequenceName="BOA_BILM_TRANSACTION_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-132">
+        <dropSequence sequenceName="BOA_BILM_USER_PROFILE_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-133">
+        <dropSequence sequenceName="BOA_BILM_WEBSERVICES_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-134">
+        <dropSequence sequenceName="BOA_BILM_WS_PARAMS_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-135">
+        <dropSequence sequenceName="BOA_BILM_WS_RESPONSE_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-136">
+        <dropSequence sequenceName="BOA_IM_PROFILE_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-137">
+        <dropSequence sequenceName="DEPT_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-138">
+        <dropSequence sequenceName="EMP_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-139">
+        <dropSequence sequenceName="SYS_TRACK_MESSAGES_SEQ"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-1">
+        <dropForeignKeyConstraint baseTableName="jhi_user_authority" constraintName="FK290okww5jujghp4el5i7mgwu0"/>
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="jhi_user_authority" constraintName="FK290okww5jujghp4el5i7mgwu0" referencedColumnNames="id" referencedTableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-2">
+        <dropForeignKeyConstraint baseTableName="jhi_persistent_audit_evt_data" constraintName="FK2ehnyx2si4tjd2nt4q7y40v8m"/>
+        <addForeignKeyConstraint baseColumnNames="event_id" baseTableName="jhi_persistent_audit_evt_data" constraintName="FK2ehnyx2si4tjd2nt4q7y40v8m" referencedColumnNames="event_id" referencedTableName="jhi_persistent_audit_event"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-3">
+        <dropForeignKeyConstraint baseTableName="jhi_user_authority" constraintName="FK4psxl0jtx6nr7rhqbynr6itoc"/>
+        <addForeignKeyConstraint baseColumnNames="authority_name" baseTableName="jhi_user_authority" constraintName="FK4psxl0jtx6nr7rhqbynr6itoc" referencedColumnNames="name" referencedTableName="jhi_authority"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-4">
+        <alterSequence sequenceName="boa_bilm_trans_glob_seq"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-5">
+        <alterSequence sequenceName="sequence_generator"/>
+        <alterSequence sequenceName="sequence_generator"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-6">
+        <alterSequence sequenceName="tracking_id_seq"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-7">
+        <dropNotNullConstraint columnDataType="number(19,0)" columnName="biller_code" tableName="boa_bilm_transaction_global_t"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-8">
+        <dropUniqueConstraint constraintName="UC_JHI_USEREMAIL_COL" tableName="jhi_user"/>
+        <addUniqueConstraint columnNames="email" constraintName="UC_JHI_USEREMAIL_COL" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-9">
+        <dropUniqueConstraint constraintName="UC_JHI_USERLOGIN_COL" tableName="jhi_user"/>
+        <addUniqueConstraint columnNames="login" constraintName="UC_JHI_USERLOGIN_COL" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-10">
+        <dropPrimaryKey tableName="boa_bilm_biller_t"/>
+        <createIndex indexName="IX_boa_bilm_biller_tPK" tableName="boa_bilm_biller_t" unique="true">
+            <column name="biller_id"/>
+        </createIndex>
+        <addPrimaryKey columnNames="biller_id" constraintName="boa_bilm_biller_tPK" forIndexName="IX_boa_bilm_biller_tPK" tableName="boa_bilm_biller_t"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-11">
+        <dropPrimaryKey tableName="boa_bilm_tracking_t"/>
+        <createIndex indexName="IX_boa_bilm_tracking_tPK" tableName="boa_bilm_tracking_t" unique="true">
+            <column name="id"/>
+        </createIndex>
+        <addPrimaryKey columnNames="id" constraintName="boa_bilm_tracking_tPK" forIndexName="IX_boa_bilm_tracking_tPK" tableName="boa_bilm_tracking_t"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-12">
+        <dropPrimaryKey tableName="jhi_authority"/>
+        <createIndex indexName="IX_jhi_authorityPK" tableName="jhi_authority" unique="true">
+            <column name="name"/>
+        </createIndex>
+        <addPrimaryKey columnNames="name" constraintName="jhi_authorityPK" forIndexName="IX_jhi_authorityPK" tableName="jhi_authority"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-13">
+        <dropPrimaryKey tableName="jhi_persistent_audit_event"/>
+        <createIndex indexName="IX_jhi_persistent_audit_eventPK" tableName="jhi_persistent_audit_event" unique="true">
+            <column name="event_id"/>
+        </createIndex>
+        <addPrimaryKey columnNames="event_id" constraintName="jhi_persistent_audit_eventPK" forIndexName="IX_jhi_persistent_audit_eventPK" tableName="jhi_persistent_audit_event"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-14">
+        <dropPrimaryKey tableName="jhi_user"/>
+        <createIndex indexName="IX_jhi_userPK" tableName="jhi_user" unique="true">
+            <column name="id"/>
+        </createIndex>
+        <addPrimaryKey columnNames="id" constraintName="jhi_userPK" forIndexName="IX_jhi_userPK" tableName="jhi_user"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-15">
+        <dropPrimaryKey tableName="jhi_persistent_audit_evt_data"/>
+        <createIndex indexName="IX_null" tableName="jhi_persistent_audit_evt_data" unique="true">
+            <column name="event_id"/>
+            <column name="name"/>
+        </createIndex>
+        <addPrimaryKey columnNames="event_id, name" forIndexName="IX_null" tableName="jhi_persistent_audit_evt_data"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-16">
+        <dropPrimaryKey tableName="jhi_user_authority"/>
+        <createIndex indexName="IX_null" tableName="jhi_user_authority" unique="true">
+            <column name="user_id"/>
+            <column name="authority_name"/>
+        </createIndex>
+        <addPrimaryKey columnNames="user_id, authority_name" forIndexName="IX_null" tableName="jhi_user_authority"/>
+    </changeSet>
+    <changeSet author="tijdr (generated)" id="1630509936234-17">
+        <dropPrimaryKey tableName="param_filiale"/>
+        <createIndex indexName="IX_param_filialePK" tableName="param_filiale" unique="true">
+            <column name="id"/>
+        </createIndex>
+        <addPrimaryKey columnNames="id" constraintName="param_filialePK" forIndexName="IX_param_filialePK" tableName="param_filiale"/>
+    </changeSet-->
+</databaseChangeLog>

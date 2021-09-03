@@ -19,6 +19,7 @@
     <include file="config/liquibase/changelog/20200318103714_added_entity_TransactionGlobal.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20200318104650_added_entity_BillerT.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20200318103714_added_entity_constraints_TransactionGlobal.xml" relativeToChangelogFile="false"/>
+    <!--include file="config/liquibase/changelog/20200318103714_added_entity_constraints_TransactionGlobal.xml" relativeToChangelogFile="false"/-->
+    <include file="config/liquibase/changelog/20210901170050_changelog.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

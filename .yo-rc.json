@@ -32,6 +32,8 @@
     "enableTranslation": false,
     "clientPackageManager": "npm",
     "blueprints": [],
-    "skipClient": true
+    "skipClient": true,
+    "lastLiquibaseTimestamp": 1630507830000,
+    "entities": ["CategorieBiller", "Tracking", "ParamFiliale", "TransactionGlobal", "BillerT"]
   }
 }

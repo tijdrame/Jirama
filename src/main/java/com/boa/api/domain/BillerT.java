@@ -75,6 +75,9 @@ public class BillerT implements Serializable {
     @Column(name = "DEVISE")
     private String devise;
 
+    @Transient
+    private String logoEnChaine;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;

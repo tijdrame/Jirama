@@ -11,6 +11,7 @@ import com.boa.api.request.CheckFactoryRequest;
 import com.boa.api.request.GetAccountRequest;
 import com.boa.api.request.GetBillFeesRequest;
 import com.boa.api.request.GetBillRequest;
+import com.boa.api.request.GetBillersByCategRequest;
 import com.boa.api.request.GetBillersRequest;
 import com.boa.api.request.GetBillsByNumRequest;
 import com.boa.api.request.GetBillsByRefJiramaReq;
@@ -20,6 +21,7 @@ import com.boa.api.request.PaymentReceiptRequest;
 import com.boa.api.request.RecuPaiementRequest;
 import com.boa.api.request.ResponseRequest;
 import com.boa.api.response.BillerByCodeResponse;
+import com.boa.api.response.CategBillersResponse;
 import com.boa.api.response.CheckCustomerResponse;
 import com.boa.api.response.CheckFactoryResponse;
 import com.boa.api.response.FactureDispoResponse;
@@ -211,6 +213,40 @@ public class ApiResource {
             return ResponseEntity.ok().header("Authorization", request.getHeader("Authorization")).body(response);
         }
         response = apiService.getBillers(billersRequest, request);
+        return ResponseEntity.ok().header("Authorization", request.getHeader("Authorization")).body(response);
+    }
+
+    @PostMapping(produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }, 
+    consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE },path = "/getBillersByCateg")
+    public ResponseEntity<GetBillersResponse> getBillersByCateg(@RequestBody GetBillersByCategRequest billersRequest,
+            HttpServletRequest request) throws URISyntaxException {
+        log.debug("REST request to getBillersByCateg : {}", billersRequest);
+
+        GetBillersResponse response = new GetBillersResponse();
+        if (controleParam(billersRequest.getCountry()) || controleParam(billersRequest.getCategorie())) {
+            response.setCode(ICodeDescResponse.PARAM_ABSENT_CODE);
+            response.setDateResponse(Instant.now());
+            response.setDescription(ICodeDescResponse.PARAM_DESCRIPTION);
+            return ResponseEntity.ok().header("Authorization", request.getHeader("Authorization")).body(response);
+        }
+        response = apiService.getBillersByCateg(billersRequest, request);
+        return ResponseEntity.ok().header("Authorization", request.getHeader("Authorization")).body(response);
+    }
+
+    @PostMapping(produces = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE }, 
+    consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.APPLICATION_JSON_VALUE },path = "/getCategByCountry")
+    public ResponseEntity<CategBillersResponse> getCategByCountry(@RequestBody GetBillersRequest billersRequest,
+            HttpServletRequest request) throws URISyntaxException {
+        log.debug("REST request to getCategByCountry : {}", billersRequest);
+
+        CategBillersResponse response = new CategBillersResponse();
+        if (controleParam(billersRequest.getCountry())) {
+            response.setCode(ICodeDescResponse.PARAM_ABSENT_CODE);
+            response.setDateResponse(Instant.now());
+            response.setDescription(ICodeDescResponse.PARAM_DESCRIPTION);
+            return ResponseEntity.ok().header("Authorization", request.getHeader("Authorization")).body(response);
+        }
+        response = apiService.getCategByCountry(billersRequest, request);
         return ResponseEntity.ok().header("Authorization", request.getHeader("Authorization")).body(response);
     }
 
